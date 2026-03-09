@@ -1,0 +1,16 @@
+{
+  "name": "callus",
+  "version": "0.1.0",
+  "description": "Skills hardened where it hurts — automatic skill refinement from recurring struggles",
+  "author": {
+    "name": "wisdommen"
+  },
+  "license": "MIT",
+  "keywords": [
+    "skill",
+    "learning",
+    "memory",
+    "hooks",
+    "self-improvement"
+  ]
+}
