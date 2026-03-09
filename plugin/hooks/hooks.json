@@ -1,0 +1,28 @@
+{
+  "description": "Callus — automatic skill refinement hooks",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "_R=\"${CLAUDE_PLUGIN_ROOT}\"; [ -z \"$_R\" ] && _R=\"$HOME/.claude/plugins/marketplaces/callus/plugin\"; node \"$_R/hooks/stop-analyze.js\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "_R=\"${CLAUDE_PLUGIN_ROOT}\"; [ -z \"$_R\" ] && _R=\"$HOME/.claude/plugins/marketplaces/callus/plugin\"; node \"$_R/hooks/session-start-forge.js\"",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

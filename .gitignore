@@ -1,0 +1,8 @@
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
+
+# Callus runtime data (user-specific, not plugin code)
+# ~/.callus/ is outside this repo, but just in case
+.callus/
