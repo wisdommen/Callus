@@ -115,19 +115,19 @@ Start a new Claude Code session. On first run, Callus automatically creates its 
 When Callus detects a recurring problem, at the start of your next session you'll see something like:
 
 ```
-[callus] 检测到你在以下主题上反复遇到困难：
+[callus] Detected recurring difficulty on the following topic:
 
-主题: playwright-react
-出现次数: 5 次，跨 2 个 session
-总严重度: 12
+Topic: playwright-react
+Occurrences: 5 times across 2 sessions
+Total severity: 12
 
-典型问题:
+Typical issues:
 - [repeated_tool_failure] severity 2: Bash failed 3 times (Error: Cannot read fiber)
 - [approach_pivot] severity 2: "Let me try a different approach."
 - [error_loop] severity 3: Same error occurred 3 times
 
-建议动作：在项目 CLAUDE.md 中追加一条规则来防止此类问题。
-请起草一条简洁、可操作的规则，并在添加前征求用户确认。
+Suggested action: Append a rule to the project CLAUDE.md to prevent this class of issues.
+Please draft a concise, actionable rule and ask the user for confirmation before adding it.
 ```
 
 Claude then drafts a rule or skill, and asks you to confirm before writing anything.
@@ -176,7 +176,7 @@ Edit `~/.callus/config.json` to customize behavior:
     "file_churn": { "enabled": true, "min_edits": 5 },
     "approach_pivot": {
       "enabled": true,
-      "patterns": ["let me try", "different approach", "换个方法", "试试另一种"]
+      "patterns": ["let me try", "different approach", "try another", "let's try"]
     },
     "long_exploration": { "enabled": true, "min_reads": 10 },
     "error_loop": { "enabled": true, "min_count": 3 }

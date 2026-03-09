@@ -8,7 +8,7 @@ const defaultConfig = {
   detectors: {
     repeated_tool_failure: { enabled: true, min_count: 3 },
     file_churn: { enabled: true, min_edits: 5 },
-    approach_pivot: { enabled: true, patterns: ["let me try", "different approach", "换个方法"] },
+    approach_pivot: { enabled: true, patterns: ["let me try", "different approach"] },
     long_exploration: { enabled: true, min_reads: 10 },
     error_loop: { enabled: true, min_count: 3 }
   }

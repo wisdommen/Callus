@@ -30,7 +30,6 @@ const DEFAULT_CONFIG = {
     approach_pivot: {
       enabled: true,
       patterns: [
-        "让我换个方法", "试试另一种", "换一种方式",
         "let me try", "different approach", "try another", "let's try"
       ]
     },
@@ -39,7 +38,7 @@ const DEFAULT_CONFIG = {
   },
   exclude_topics: [],
   topic_groups: {},
-  language: "zh-CN"
+  language: "en"
 };
 
 const DEFAULT_SIGNALS = { signals: [], self_reviews: [] };

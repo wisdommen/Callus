@@ -113,25 +113,25 @@ function buildL1Prompt(topic, data, hasClaudeMem) {
   ).join('\n');
 
   const selfReviews = data.self_reviews.flatMap(r => [
-    ...r.struggles.filter(s => s.topic === topic).map(s => `- 困难: ${s.what_happened} → 教训: ${s.lesson}`),
-    ...r.wins.filter(w => w.topic === topic).map(w => `- 成功模式: ${w.pattern}`)
+    ...r.struggles.filter(s => s.topic === topic).map(s => `- Struggle: ${s.what_happened} -> Lesson: ${s.lesson}`),
+    ...r.wins.filter(w => w.topic === topic).map(w => `- Successful pattern: ${w.pattern}`)
   ]).join('\n');
 
-  let prompt = `[callus] 检测到你在以下主题上反复遇到困难：
+  let prompt = `[callus] Detected recurring difficulty on the following topic:
 
-主题: ${topic}
-出现次数: ${data.signal_count} 次，跨 ${data.session_count} 个 session
-总严重度: ${data.total_severity}
+Topic: ${topic}
+Occurrences: ${data.signal_count} times across ${data.session_count} sessions
+Total severity: ${data.total_severity}
 
-典型问题:
+Typical issues:
 ${evidence}
-${selfReviews ? `\n自评摘要:\n${selfReviews}` : ''}
+${selfReviews ? `\nSelf-review summary:\n${selfReviews}` : ''}
 
-建议动作：在项目 CLAUDE.md 中追加一条规则来防止此类问题。
-请起草一条简洁、可操作的规则，并在添加前征求用户确认。`;
+Suggested action: Append a rule to the project CLAUDE.md to prevent this class of issues.
+Please draft a concise, actionable rule and ask the user for confirmation before adding it.`;
 
   if (hasClaudeMem) {
-    prompt += `\n\n提示：可以使用 smart_search 工具搜索更多关于 "${topic}" 的历史上下文。`;
+    prompt += `\n\nHint: You can use smart_search to find more historical context about "${topic}".`;
   }
 
   return prompt;
@@ -144,27 +144,27 @@ function buildL2Prompt(topic, data, hasClaudeMem, hasWritingSkills, registry) {
   ).join('\n');
 
   const selfReviews = data.self_reviews.flatMap(r => [
-    ...r.struggles.filter(s => s.topic === topic).map(s => `- 不要做: ${s.what_happened} (根因: ${s.root_cause})`),
-    ...r.wins.filter(w => w.topic === topic).map(w => `- 应该做: ${w.pattern}`)
+    ...r.struggles.filter(s => s.topic === topic).map(s => `- Don't: ${s.what_happened} (root cause: ${s.root_cause})`),
+    ...r.wins.filter(w => w.topic === topic).map(w => `- Do: ${w.pattern}`)
   ]).join('\n');
 
-  let prompt = `[callus] 反复困难升级，建议创建独立 Skill：
+  let prompt = `[callus] Recurring difficulty escalated — suggesting a standalone Skill:
 
-主题: ${topic}
-出现次数: ${data.signal_count} 次，跨 ${data.session_count} 个 session
-总严重度: ${data.total_severity}
-${existingRule ? `已有 CLAUDE.md 规则（不足以解决问题）: "${existingRule.rule}"` : ''}
+Topic: ${topic}
+Occurrences: ${data.signal_count} times across ${data.session_count} sessions
+Total severity: ${data.total_severity}
+${existingRule ? `Existing CLAUDE.md rule (insufficient): "${existingRule.rule}"` : ''}
 
-证据:
+Evidence:
 ${evidence}
-${selfReviews ? `\n经验总结:\n${selfReviews}` : ''}
+${selfReviews ? `\nLessons learned:\n${selfReviews}` : ''}
 
-建议动作：在 ~/.claude/skills/${topic}/SKILL.md 创建一个 Skill。
-Skill 应包含两个 section："不要做"（失败教训）和 "应该做"（成功模式）。
-创建前请征求用户确认。`;
+Suggested action: Create a Skill at ~/.claude/skills/${topic}/SKILL.md
+The skill should have two sections: "Don't do" (from failures) and "Do instead" (from successes).
+Please ask the user for confirmation before creating.`;
 
-  if (hasWritingSkills) prompt += `\n\n提示：请遵循 writing-skills 的 TDD 规范来创建 skill。`;
-  if (hasClaudeMem) prompt += `\n提示：可以使用 smart_search 工具搜索更多关于 "${topic}" 的历史上下文。`;
+  if (hasWritingSkills) prompt += `\n\nHint: Follow the writing-skills TDD process to create the skill.`;
+  if (hasClaudeMem) prompt += `\nHint: You can use smart_search to find more historical context about "${topic}".`;
 
   return prompt;
 }
@@ -173,13 +173,13 @@ function buildIteratePrompt(topic, data, registry) {
   const skill = registry.skills[topic];
   const activeVersion = skill.versions.find(v => v.status === 'active');
 
-  return `[callus] Skill "${topic}" (v${activeVersion.version}, 置信度: ${skill.confidence}) 未能防止同类问题复现：
+  return `[callus] Skill "${topic}" (v${activeVersion.version}, confidence: ${skill.confidence}) has not prevented recurrence:
 
-Skill 路径: ${activeVersion.path}
-创建后仍出现的信号: ${data.signal_count} 次
-新的教训: ${data.self_reviews.flatMap(r => r.struggles.filter(s => s.topic === topic).map(s => s.lesson)).join('; ')}
+Skill path: ${activeVersion.path}
+Post-skill signals: ${data.signal_count} occurrences
+New lessons: ${data.self_reviews.flatMap(r => r.struggles.filter(s => s.topic === topic).map(s => s.lesson)).join('; ')}
 
-建议动作：迭代升级该 Skill，补充遗漏的场景。请征求用户确认。`;
+Suggested action: Iterate the skill with missing scenarios. Please ask the user for confirmation.`;
 }
 
 function buildMergePrompt(skills, registry) {
@@ -188,12 +188,12 @@ function buildMergePrompt(skills, registry) {
     return `- ${topic} (${active?.path})`;
   }).join('\n');
 
-  return `[callus] 以下 ${skills.length} 个精确 Skill 属于同一领域，建议合并为模式级 Skill：
+  return `[callus] The following ${skills.length} precise skills belong to the same domain and can be merged into a pattern-level skill:
 
 ${list}
 
-建议动作：创建一个新的模式级 Skill 整合以上内容，然后归档原有 Skill 到 ~/.callus/archive/。
-请征求用户确认。`;
+Suggested action: Create a new pattern-level skill consolidating the above, then archive originals to ~/.callus/archive/.
+Please ask the user for confirmation.`;
 }
 
 function findMergeClusters(activeSkills, config) {
