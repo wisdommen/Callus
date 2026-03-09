@@ -1,0 +1,27 @@
+{
+  "name": "callus",
+  "owner": {
+    "name": "Ling Bao",
+    "url": "https://github.com/wisdommen"
+  },
+  "metadata": {
+    "description": "Skills hardened where it hurts — automatic skill refinement from recurring struggles",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "callus",
+      "source": ".",
+      "description": "Automatic skill refinement from recurring struggles across Claude Code sessions",
+      "version": "0.1.0",
+      "author": {
+        "name": "Ling Bao"
+      },
+      "homepage": "https://github.com/wisdommen/Callus",
+      "repository": "https://github.com/wisdommen/Callus",
+      "license": "MIT",
+      "keywords": ["skill", "learning", "memory", "hooks", "self-improvement"],
+      "category": "productivity"
+    }
+  ]
+}

@@ -70,17 +70,26 @@ Callus runs **5 quantitative detectors** on every session transcript:
 
 ## Installation
 
-### From Source (recommended)
+### Via Plugin Marketplace (recommended)
+
+```bash
+# 1. Add the Callus marketplace
+/plugin marketplace add wisdommen/Callus
+
+# 2. Install the plugin
+/plugin install callus@callus
+```
+
+That's it. The plugin is ready to use.
+
+### From Source (manual)
 
 ```bash
 # Clone into Claude Code plugin directory
 git clone https://github.com/wisdommen/Callus.git ~/.claude/plugins/marketplaces/callus
-
-# Enable the plugin in Claude Code settings
-# Add "callus@callus": true to enabledPlugins in ~/.claude/settings.json
 ```
 
-Or manually add to `~/.claude/settings.json`:
+Then add to `~/.claude/settings.json`:
 
 ```json
 {
